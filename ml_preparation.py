@@ -1,6 +1,7 @@
 import librosa
 import numpy as np
 
+
 def extract_features(audio_path, sample_rate=4000, n_mfcc=13, n_fft=2048):
     """
     Extract MFCC features from an audio file.
