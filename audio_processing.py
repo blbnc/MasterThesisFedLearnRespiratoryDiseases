@@ -66,7 +66,7 @@ def stream_audio_dataset(dataset_path, batch_size=32, target_sr=None, save_to_di
                 sr = target_sr
  
             #filtered_audio = butter_lowpass_filter(y, cutoff_freq=200, sample_rate=sr)
-            filtered_audio = butter_bandpass_filter(y, lowcut=100, highcut=800, sample_rate=sr)
+            filtered_audio = butter_bandpass_filter(y, lowcut=100, highcut=200, sample_rate=sr)
 
             if(save_to_disk):
                 output_path = file_path.replace(dataset_path, f"{dataset_path}_filtered")
@@ -74,6 +74,7 @@ def stream_audio_dataset(dataset_path, batch_size=32, target_sr=None, save_to_di
                 save_filtered_audio(file_path, output_path, filtered_audio, sr)
   
 # Load the dataset folder
-dataset_path = 'ICBHI_cycles'
+# dataset_path = 'ICBHI_cycles'
+dataset_path = 'SPRSound/Classification/train_classification_cycles'
  
 stream_audio_dataset(dataset_path, batch_size=32, target_sr=4000, save_to_disk=True)
