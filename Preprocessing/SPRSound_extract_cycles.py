@@ -71,8 +71,8 @@ def process_dataset(wav_path, json_path, output_dir, sample_rate=16000):
                     print(f"Audio file missing for: {base_name}")
 
 
-wav_path = 'SPRSound/Classification/train_classification_wav'  # Folder containing .wav files
-json_path = 'SPRSound/Classification/train_classification_json'  # Folder containing .json files
-output_dir = 'SPRSound/Classification/train_classification_cycles'  # Folder where segmented audio will be saved
+wav_path = '../SPRSound/Classification/train_classification_wav'  # Folder containing .wav files
+json_path = '../SPRSound/Classification/train_classification_json'  # Folder containing .json files
+output_dir = '../SPRSound/Classification/train_classification_cycles'  # Folder where segmented audio will be saved
 
 process_dataset(wav_path, json_path, output_dir, sample_rate=16000)

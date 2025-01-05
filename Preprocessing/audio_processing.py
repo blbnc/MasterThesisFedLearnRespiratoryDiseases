@@ -74,7 +74,7 @@ def stream_audio_dataset(dataset_path, batch_size=32, target_sr=None, save_to_di
                 save_filtered_audio(file_path, output_path, filtered_audio, sr)
   
 # Load the dataset folder
-# dataset_path = 'ICBHI_cycles'
-dataset_path = 'SPRSound/Classification/train_classification_cycles'
+# dataset_path = '../ICBHI_cycles'
+dataset_path = '../SPRSound/Classification/train_classification_cycles'
  
 stream_audio_dataset(dataset_path, batch_size=32, target_sr=4000, save_to_disk=True)
