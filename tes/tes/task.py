@@ -13,26 +13,25 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 NUM_CLIENTS = 5
 BATCH_SIZE = 32
 
-train_loader = None
-test_loader = None
-label_encoder = None
+
 import tes.ml_training as ml_training
-def load_data(partition_id: int, num_partitions: int):
-    global train_loader, test_loader, label_encoder
-    if train_loader is None:
-        train_loader, test_loader, label_encoder = ml_training.load_datasets('H:\Sound\SPRSound\Classification\\train_classification_cycles')
+def load_data(partition_id: int, num_partitions: int, client_type: int):
+    #if train_loader is None:
+    train_loader, test_loader = ml_training.load_datasets('H:\Sound\SPRSound\Classification\\train_classification_cycles', client_type)
 
     # Step 2: Partition the training dataset into `num_partitions`
-    client_datasets = ml_training.partition_dataset(train_loader.dataset, num_partitions)
+    #client_datasets = ml_training.partition_dataset(train_loader.dataset, num_partitions)
 
     # Step 3: Select the dataset for the current partition
-    client_dataset = client_datasets[partition_id]
+    #client_dataset = client_datasets[partition_id]
 
     # Step 4: Create DataLoader for the partitioned dataset
-    client_train_loader = DataLoader(client_dataset, batch_size=BATCH_SIZE, shuffle=True)
+    #client_train_loader = DataLoader(client_dataset, batch_size=BATCH_SIZE, shuffle=True)
+
+    client_train_loader = DataLoader(train_loader.dataset, batch_size=BATCH_SIZE, shuffle=True)
 
     # Test loader is shared among all clients, so we return it as is
-    return client_train_loader, test_loader, label_encoder
+    return client_train_loader, test_loader
 
 
 def train(net, trainloader, epochs, device):
@@ -77,4 +76,8 @@ def get_weights(net):
 def set_weights(net, parameters):
     params_dict = zip(net.state_dict().keys(), parameters)
     state_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
-    net.load_state_dict(state_dict, strict=True)
+    try:
+        net.load_state_dict(state_dict, strict=True)
+    except RuntimeError as e:
+        print(f"Partial load due to mismatch: {e}")
+        net.load_state_dict(state_dict, strict=False)

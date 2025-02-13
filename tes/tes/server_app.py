@@ -3,7 +3,7 @@
 from flwr.common import Context, ndarrays_to_parameters
 from flwr.server import ServerApp, ServerAppComponents, ServerConfig
 from flwr.server.strategy import FedAvg
-from tes.ml_models import CNN6_6, CNN6
+from tes.ml_models import CNN6
 
 def get_weights(net):
     return [val.cpu().numpy() for _, val in net.state_dict().items()]
